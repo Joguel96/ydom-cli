@@ -1,12 +1,17 @@
-﻿#!/usr/bin/env node
+#!/usr/bin/env node
 import { resolve, join } from 'node:path';
-import { existsSync, mkdirSync, readdirSync, statSync, readFileSync, writeFileSync, copyFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readdirSync, statSync, readFileSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
+import { spawn } from 'node:child_process';
 import prompts from 'prompts';
 import kleur from 'kleur';
 
 // --- Helpers ---
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
+
+function stripBom(str: string): string {
+  return str.replace(/^\uFEFF/, '');
+}
 
 function copyDir(src: string, dest: string, projectName: string): void {
   mkdirSync(dest, { recursive: true });
@@ -16,14 +21,16 @@ function copyDir(src: string, dest: string, projectName: string): void {
     if (statSync(srcPath).isDirectory()) {
       copyDir(srcPath, destPath, projectName);
     } else {
-      // En package.json del template, reemplazamos el placeholder del nombre
       if (entry === '_package.json') {
-        const content = readFileSync(srcPath, 'utf-8').replace(/\{\{PROJECT_NAME\}\}/g, projectName);
+        let content = stripBom(readFileSync(srcPath, 'utf-8'));
+        content = content.replace(/\{\{PROJECT_NAME\}\}/g, projectName);
         writeFileSync(join(dest, 'package.json'), content, 'utf-8');
       } else if (entry === '_gitignore') {
-        copyFileSync(srcPath, join(dest, '.gitignore'));
+        const content = stripBom(readFileSync(srcPath, 'utf-8'));
+        writeFileSync(join(dest, '.gitignore'), content, 'utf-8');
       } else {
-        copyFileSync(srcPath, destPath);
+        const content = stripBom(readFileSync(srcPath, 'utf-8'));
+        writeFileSync(destPath, content, 'utf-8');
       }
     }
   }
@@ -35,17 +42,40 @@ function isEmptyDir(dir: string): boolean {
   return files.length === 0;
 }
 
+function runNpmInstall(targetPath: string): Promise<void> {
+  return new Promise((resolve, reject) => {
+    console.log(kleur.cyan('\n  ⏳ Instalando dependencias con npm install...\n'));
+    const npmCmd = process.platform === 'win32' ? 'npm.cmd' : 'npm';
+    const child = spawn(npmCmd, ['install'], {
+      cwd: targetPath,
+      stdio: 'inherit',
+      shell: true
+    });
+
+    child.on('close', (code) => {
+      if (code === 0) {
+        resolve();
+      } else {
+        reject(new Error(`npm install finalizó con código ${code}`));
+      }
+    });
+
+    child.on('error', (err) => {
+      reject(err);
+    });
+  });
+}
+
 function printSuccess(projectName: string, targetDir: string): void {
   const isCurrentDir = targetDir === '.';
   console.log('');
-  console.log(kleur.green().bold('  ✔ Proyecto YDOM creado exitosamente!'));
+  console.log(kleur.green().bold('  ✔ ¡Proyecto YDOM creado y listo!'));
   console.log('');
-  console.log(kleur.white('  Próximos pasos:'));
+  console.log(kleur.white('  Para iniciar tu servidor de desarrollo:'));
   console.log('');
   if (!isCurrentDir) {
     console.log(kleur.cyan(`    cd ${projectName}`));
   }
-  console.log(kleur.cyan('    npm install'));
   console.log(kleur.cyan('    npm run dev'));
   console.log('');
   console.log(kleur.dim('  Documentación: https://github.com/Joguel96/ydom-core'));
@@ -58,7 +88,6 @@ async function main(): Promise<void> {
   console.log(kleur.bold().yellow('  ◈ create-ydom') + kleur.dim(' — Scaffold a new YDOM project'));
   console.log('');
 
-  // Argumento posicional: npx create-ydom [project-name]
   let targetArg = process.argv[2]?.trim();
 
   let projectName: string;
@@ -113,8 +142,15 @@ async function main(): Promise<void> {
 
   const templateDir = join(__dirname, '..', 'template');
   console.log('');
-  console.log(kleur.dim(`  Generando proyecto en ${targetPath}...`));
+  console.log(kleur.dim(`  Generando archivos del proyecto en ${targetPath}...`));
   copyDir(templateDir, targetPath, projectName);
+  console.log(kleur.green('  ✔ Copia de plantilla completa.'));
+
+  try {
+    await runNpmInstall(targetPath);
+  } catch (error) {
+    console.log(kleur.yellow('\n  ⚠ No se pudo completar npm install automáticamente. Puedes correrlo manualmente.'));
+  }
 
   printSuccess(projectName, targetDir);
 }

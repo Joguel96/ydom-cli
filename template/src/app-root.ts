@@ -1,4 +1,4 @@
-﻿import { Component } from 'ydom-core';
+import { Component } from 'ydom-core';
 import { signal } from 'ydom-core';
 
 @Component({
