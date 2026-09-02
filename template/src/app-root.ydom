@@ -2,29 +2,17 @@ div:
   (class="hero")
   div:
     (class="logo-wrapper")
-    svg:
-      (class="logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100")
-      defs:
-        linearGradient:
-          (id="grad" x1="0%" y1="0%" x2="100%" y2="100%")
-          stop:
-            (offset="0%" style="stop-color:#6366f1;stop-opacity:1")
-          stop:
-            (offset="100%" style="stop-color:#a855f7;stop-opacity:1")
-      circle:
-        (cx="50" cy="50" r="48" fill="url(#grad)" opacity="0.15")
-      text:
-        (x="50" y="63" text-anchor="middle" font-size="42" font-weight="800" fill="url(#grad)" font-family="monospace")
-        "Y"
+    img:
+      (class="logo" src="/favicon.svg" alt="YDOM Logo")
   span:
     (class="badge")
-    "◈ YDOM Framework"
+    "◈ YDOM Library"
   h1:
     (class="title")
     "Build Reactive UIs"
   p:
     (class="subtitle")
-    "Un motor reactivo moderno basado en señales y Web Components. Sin magia oculta, solo JavaScript puro con superpoderes."
+    "Un motor reactivo ultraligero basado en señales y Web Components nativos. Sin magia oculta, solo JavaScript puro con superpoderes."
   div:
     (class="counter-card")
     span:
