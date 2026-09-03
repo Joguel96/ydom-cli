@@ -40,8 +40,11 @@ jobs:
         run: |
           VERSION=$(node -p "require('./package.json').version")
           echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+          # Generar notas automáticas desde el último commit
+          NOTES="Release v$VERSION\n\n$(git log -1 --pretty=%B)"
           echo "notes<<EOF" >> $GITHUB_OUTPUT
-          cat RELEASE.md >> $GITHUB_OUTPUT
+          echo -e "$NOTES" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
 
       - name: Create GitHub Release
