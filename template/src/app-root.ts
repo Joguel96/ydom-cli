@@ -26,8 +26,8 @@ import { signal } from 'ydom-core';
       position: absolute;
       inset: 0;
       background:
-        radial-gradient(ellipse 80% 60% at 50% -10%, rgba(99, 102, 241, 0.25) 0%, transparent 70%),
-        radial-gradient(ellipse 50% 40% at 80% 80%, rgba(168, 85, 247, 0.15) 0%, transparent 60%);
+        radial-gradient(ellipse 80% 60% at 50% -10%, rgba(226, 84, 31, 0.25) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 40% at 80% 80%, rgba(195, 30, 30, 0.16) 0%, transparent 60%);
       pointer-events: none;
     }
 
@@ -39,7 +39,7 @@ import { signal } from 'ydom-core';
     .logo {
       width: 96px;
       height: 96px;
-      filter: drop-shadow(0 0 32px rgba(99, 102, 241, 0.6));
+      filter: drop-shadow(0 0 32px rgba(226, 84, 31, 0.55));
     }
 
     @keyframes float {
@@ -51,9 +51,9 @@ import { signal } from 'ydom-core';
       display: inline-flex;
       align-items: center;
       gap: 0.4rem;
-      background: rgba(99, 102, 241, 0.12);
-      border: 1px solid rgba(99, 102, 241, 0.35);
-      color: #a5b4fc;
+      background: rgba(226, 84, 31, 0.12);
+      border: 1px solid rgba(226, 84, 31, 0.35);
+      color: #f5a35f;
       font-size: 0.75rem;
       font-weight: 600;
       letter-spacing: 0.08em;
@@ -68,7 +68,7 @@ import { signal } from 'ydom-core';
       font-weight: 800;
       line-height: 1.1;
       margin: 0 0 1rem;
-      background: linear-gradient(135deg, #f8fafc 0%, #a5b4fc 50%, #c084fc 100%);
+      background: linear-gradient(135deg, #f8fafc 0%, #f5a35f 50%, #f4715f 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -84,7 +84,7 @@ import { signal } from 'ydom-core';
 
     .counter-card {
       background: rgba(15, 15, 30, 0.7);
-      border: 1px solid rgba(99, 102, 241, 0.25);
+      border: 1px solid rgba(226, 84, 31, 0.22);
       border-radius: 1.25rem;
       padding: 2rem 3rem;
       margin-bottom: 2.5rem;
@@ -109,7 +109,7 @@ import { signal } from 'ydom-core';
       font-size: 3.5rem;
       font-weight: 800;
       line-height: 1;
-      background: linear-gradient(135deg, #6366f1, #a855f7);
+      background: linear-gradient(135deg, #e2541f, #c31e1e);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -137,14 +137,14 @@ import { signal } from 'ydom-core';
     }
 
     .btn-primary {
-      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      background: linear-gradient(135deg, #e2541f, #c31e1e);
       color: white;
-      box-shadow: 0 4px 16px rgba(99, 102, 241, 0.35);
+      box-shadow: 0 4px 16px rgba(226, 84, 31, 0.35);
     }
 
     .btn-primary:hover {
       transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(99, 102, 241, 0.5);
+      box-shadow: 0 8px 24px rgba(226, 84, 31, 0.5);
     }
 
     .btn-primary:active {
@@ -181,7 +181,7 @@ import { signal } from 'ydom-core';
     }
 
     .link:hover {
-      color: #a5b4fc;
+      color: #f5a35f;
     }
 
     .link svg {

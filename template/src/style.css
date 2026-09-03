@@ -7,11 +7,11 @@
 :root {
   --color-bg: #080810;
   --color-surface: #0f0f1e;
-  --color-border: rgba(99, 102, 241, 0.2);
+  --color-border: rgba(226, 84, 31, 0.2);
   --color-text: #e2e8f0;
   --color-muted: #64748b;
-  --color-primary: #6366f1;
-  --color-secondary: #a855f7;
+  --color-primary: #e2541f;
+  --color-secondary: #c31e1e;
   --font: 'Outfit', system-ui, sans-serif;
 }
 
@@ -34,6 +34,6 @@ body {
 }
 
 ::selection {
-  background: rgba(99, 102, 241, 0.3);
+  background: rgba(226, 84, 31, 0.3);
   color: #f8fafc;
 }
