@@ -1,6 +1,6 @@
 {
   "name": "create-ydom",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "CLI scaffolding tool to create new YDOM projects",
   "type": "module",
   "bin": {
